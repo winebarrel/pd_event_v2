@@ -78,7 +78,15 @@ module PdEventV2
     private
 
     # https://v2.developer.pagerduty.com/v2/docs/send-an-event-events-api-v2
-    def send_event(event_action:, dedup_key: nil, payload:, images: nil, links: nil)
+    def send_event(
+      event_action:,
+      dedup_key: nil,
+      payload:,
+      images: nil,
+      links: nil,
+      client: nil,
+      client_url: nil
+    )
       unless payload.is_a?(Hash)
         raise ArgumentError, "wrong type payload (given: #{payload}:#{payload.class}, expected Hash)"
       end
@@ -105,6 +113,8 @@ module PdEventV2
       params[:dedup_key] = dedup_key if dedup_key
       params[:images] = images if images
       params[:links] = links if links
+      params[:client] = client if client
+      params[:client_url] = client_url if client_url
 
       res = @conn.post do |req|
         req.body = JSON.dump(params)
