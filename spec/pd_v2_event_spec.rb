@@ -69,7 +69,7 @@ RSpec.describe PdEventV2::Client do
       }
     end
 
-    specify 'has a version number' do
+    specify do
       res = client.trigger(
         dedup_key: dedup_key,
         payload: payload,
@@ -93,7 +93,7 @@ RSpec.describe PdEventV2::Client do
       }
     end
 
-    specify 'has a version number' do
+    specify do
       res = client.acknowledge(
         dedup_key: dedup_key,
         payload: payload,
@@ -117,7 +117,7 @@ RSpec.describe PdEventV2::Client do
       }
     end
 
-    specify 'has a version number' do
+    specify do
       res = client.resolve(
         dedup_key: dedup_key,
         payload: payload,
@@ -126,6 +126,30 @@ RSpec.describe PdEventV2::Client do
       )
 
       expect(res).to eq(res_body)
+    end
+  end
+
+  context 'when missing payload' do
+    specify do
+      expect do
+        client.trigger
+      end.to raise_error(/missing keyword: payload/)
+    end
+  end
+
+  context 'when missing required payload key' do
+    specify do
+      expect do
+        client.trigger(payload: {})
+      end.to raise_error(/missing payload key:/)
+    end
+  end
+
+  context 'when extra keys are passed' do
+    specify do
+      expect do
+        client.trigger(payload: payload.merge(extra_key: 'extra'))
+      end.to raise_error('invalid payload keys: [:extra_key]')
     end
   end
 end
