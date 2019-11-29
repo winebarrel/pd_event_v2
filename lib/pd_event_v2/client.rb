@@ -83,7 +83,9 @@ module PdEventV2
         raise ArgumentError, "wrong type payload (given: #{payload}:#{payload.class}, expected Hash)"
       end
 
-      payload = payload.transform_keys(&:to_sym)
+      payload = payload.map do |key, val|
+        [key.to_sym, val]
+      end.to_h
 
       PAYLOAD_KEYS.each do |key, required|
         raise ArgumentError, "missing payload key: #{key}" if required && !payload.key?(key)
