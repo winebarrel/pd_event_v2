@@ -2,6 +2,9 @@
 
 [PagerDuty Events API v2](https://v2.developer.pagerduty.com/docs/events-api-v2) Ruby Client.
 
+[![Gem Version](https://badge.fury.io/rb/pd_event_v2.svg)](http://badge.fury.io/rb/pd_event_v2)
+[![Build Status](https://travis-ci.org/winebarrel/pd_event_v2.svg?branch=master)](https://travis-ci.org/winebarrel/pd_event_v2)
+
 ## Installation
 
 Add this line to your application's Gemfile:
