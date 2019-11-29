@@ -118,7 +118,6 @@ module PdEventV2
 
       res = @conn.post do |req|
         req.body = JSON.dump(params)
-        yield(req) if block_given?
       end
 
       res.body
