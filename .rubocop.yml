@@ -2,6 +2,7 @@ AllCops:
   TargetRubyVersion: 2.5
   Exclude:
     - test.rb
+    - vendor/bundle/**/*
 Metrics/LineLength:
   Max: 120
 Style/TrailingCommaInArrayLiteral:
