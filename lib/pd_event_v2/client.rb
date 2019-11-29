@@ -91,6 +91,9 @@ module PdEventV2
         raise ArgumentError, "missing payload key: #{key}" if required && !payload.key?(key)
       end
 
+      invalid_payload_keys = (payload.keys - PAYLOAD_KEYS.keys)
+      raise ArgumentError, "invalid payload keys: #{invalid_payload_keys}" unless invalid_payload_keys.empty?
+
       routing_key = @options.fetch(:routing_key)
 
       params = {
