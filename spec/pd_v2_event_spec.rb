@@ -35,6 +35,9 @@ RSpec.describe PdEventV2::Client do
     }]
   end
 
+  let(:trigger_client) { 'Sample Monitoring Service' }
+  let(:client_url) { 'https://monitoring.example.com' }
+
   let(:res_body) do
     {
       'status' => 'success',
@@ -57,24 +60,30 @@ RSpec.describe PdEventV2::Client do
     end
   end
 
+  let(:expected_req_body) do
+    {
+      'event_action' => event_action,
+      'routing_key' => routing_key,
+      'dedup_key' => dedup_key,
+      'payload' => payload,
+      'images' => images,
+      'links' => links,
+      'client' => trigger_client,
+      'client_url' => client_url,
+    }
+  end
+
   context 'when trigger' do
-    let(:expected_req_body) do
-      {
-        'event_action' => 'trigger',
-        'routing_key' => routing_key,
-        'dedup_key' => dedup_key,
-        'payload' => payload,
-        'images' => images,
-        'links' => links,
-      }
-    end
+    let(:event_action) { 'trigger' }
 
     specify do
       res = client.trigger(
         dedup_key: dedup_key,
         payload: payload,
         images: images,
-        links: links
+        links: links,
+        client: trigger_client,
+        client_url: client_url
       )
 
       expect(res).to eq(res_body)
@@ -82,23 +91,16 @@ RSpec.describe PdEventV2::Client do
   end
 
   context 'when acknowledge' do
-    let(:expected_req_body) do
-      {
-        'event_action' => 'acknowledge',
-        'routing_key' => routing_key,
-        'dedup_key' => dedup_key,
-        'payload' => payload,
-        'images' => images,
-        'links' => links,
-      }
-    end
+    let(:event_action) { 'acknowledge' }
 
     specify do
       res = client.acknowledge(
         dedup_key: dedup_key,
         payload: payload,
         images: images,
-        links: links
+        links: links,
+        client: trigger_client,
+        client_url: client_url
       )
 
       expect(res).to eq(res_body)
@@ -106,23 +108,16 @@ RSpec.describe PdEventV2::Client do
   end
 
   context 'when resolve' do
-    let(:expected_req_body) do
-      {
-        'event_action' => 'resolve',
-        'routing_key' => routing_key,
-        'dedup_key' => dedup_key,
-        'payload' => payload,
-        'images' => images,
-        'links' => links,
-      }
-    end
+    let(:event_action) { 'resolve' }
 
     specify do
       res = client.resolve(
         dedup_key: dedup_key,
         payload: payload,
         images: images,
-        links: links
+        links: links,
+        client: trigger_client,
+        client_url: client_url
       )
 
       expect(res).to eq(res_body)

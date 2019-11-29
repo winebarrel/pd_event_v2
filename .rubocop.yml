@@ -21,3 +21,5 @@ Metrics/PerceivedComplexity:
   Enabled: false
 Metrics/BlockLength:
   Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
